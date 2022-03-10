@@ -3,6 +3,7 @@ package com.example.rest.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
@@ -13,6 +14,7 @@ public class Persons{
     @EmbeddedId
     private MainInfo mainInfo;
     private String phone_number;
-    private String city_of_living;
+    @Column(name = "city_of_living")
+    private String city;
 }
 

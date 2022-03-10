@@ -1,22 +1,19 @@
 package com.example.rest.repository;
 
 import com.example.rest.model.Persons;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class PersonsRepository {
+public interface PersonsRepository extends JpaRepository<Persons, Integer> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
 
-    public List<Persons> getPersonsByCity(String city) {
-        Query query = entityManager.createQuery("Select p from Persons p where upper(p.city_of_living) = upper(:city)", Persons.class);
-        query.setParameter("city", city);
-        return query.getResultList();
-    }
+    List<Persons> findByCityIgnoreCase(String city);
+
+    List<Persons> findByMainInfoAgeLessThanOrderByMainInfoAgeAsc(int age);
+
+    Optional<Persons> findByMainInfoNameAndMainInfoSurname(String name, String surname);
 }
